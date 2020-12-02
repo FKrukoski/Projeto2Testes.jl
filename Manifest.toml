@@ -623,7 +623,9 @@ version = "0.1.3"
 
 [[Projeto2Solvers]]
 deps = ["LinearAlgebra", "Logging", "NLPModels", "SolverTools"]
-path = "../Projeto2Solvers.jl"
+git-tree-sha1 = "7ffd32572ad5b18d454ec12655658181f43f8248"
+repo-rev = "master"
+repo-url = "https://github.com/FKrukoski/Projeto2Solvers.jl"
 uuid = "69a271e0-8f32-4952-a99b-118035fb22f0"
 version = "0.1.0"
 
