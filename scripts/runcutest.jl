@@ -5,6 +5,8 @@ using LinearAlgebra
 using NLPModels
 using Plots
 using SolverBenchmark
+using JuMP
+using Ipopt
 
 #%%
 function runcutest()
@@ -14,12 +16,16 @@ function runcutest()
 
   # If you need to define different arguments, you can wrap
   trunk_wrapper(nlp; kwargs...) = trunk(nlp, max_time=3.0; kwargs...)
-  yoursolver_wrapper(nlp; kwargs...) = uncsolver(nlp, max_iter=1; kwargs...)
+  my_newton_wrapper(nlp; kwargs...) = newton(nlp, max_time=5.0; kwargs...)
+  my_ncbusca_wrapper(nlp; kwargs...) = newtoncombusca(nlp, max_time=5.0; kwargs...)
+  my_gradiente_wrapper(nlp; kwargs...) = gradiente(nlp, max_time=5.0; kwargs...)
 
   solvers = Dict(
     :lbfgs => lbfgs,
     :trunk => trunk_wrapper,
-    :yoursolver => yoursolver_wrapper
+    :newton => my_newton_wrapper,
+    :newcombusca => my_ncbusca_wrapper,
+    :gradiente => my_gradiente_wrapper
   )
 
   stats = bmark_solvers(solvers, problems)
