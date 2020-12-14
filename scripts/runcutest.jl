@@ -10,23 +10,27 @@ using Ipopt
 
 #%%
 function runcutest()
-  pnames = CUTEst.select(max_var=2, max_con=0, only_free_var=true)
-  sort!(pnames)
+  # pnames = CUTEst.select(max_var=2, max_con=0, only_free_var=true)
+  # sort!(pnames)
+  # problems = (CUTEstModel(p) for p in pnames) # Generator of problems
+
+  pnames = ("ROSENBR", "BRKMCC") # Generator of problems
   problems = (CUTEstModel(p) for p in pnames) # Generator of problems
 
   # If you need to define different arguments, you can wrap
   trunk_wrapper(nlp; kwargs...) = trunk(nlp, max_time=3.0; kwargs...)
   my_newton_wrapper(nlp; kwargs...) = newton(nlp, max_time=5.0; kwargs...)
-  my_ncbusca_wrapper(nlp; kwargs...) = newtoncombusca(nlp, max_time=5.0; kwargs...)
+  # my_ncbusca_wrapper(nlp; kwargs...) = newtoncombusca(nlp, max_time=5.0; kwargs...)
   my_gradiente_wrapper(nlp; kwargs...) = gradiente(nlp, max_time=5.0; kwargs...)
 
   solvers = Dict(
     :lbfgs => lbfgs,
     :trunk => trunk_wrapper,
     :newton => my_newton_wrapper,
-    :newcombusca => my_ncbusca_wrapper,
+    :newcombusca => newtoncombusca,
     :gradiente => my_gradiente_wrapper
-  )
+    
+    )
 
   stats = bmark_solvers(solvers, problems)
 end
