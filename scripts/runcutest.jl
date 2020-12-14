@@ -10,12 +10,12 @@ using Ipopt
 
 #%%
 function runcutest()
-  # pnames = CUTEst.select(max_var=2, max_con=0, only_free_var=true)
-  # sort!(pnames)
-  # problems = (CUTEstModel(p) for p in pnames) # Generator of problems
-
-  pnames = ("ROSENBR", "BRKMCC") # Generator of problems
+  pnames = CUTEst.select(max_var=2, max_con=0, only_free_var=true)
+  sort!(pnames)
   problems = (CUTEstModel(p) for p in pnames) # Generator of problems
+
+  #pnames = ("ROSENBR", "BRKMCC") # Generator of problems
+  #problems = (CUTEstModel(p) for p in pnames) # Generator of problems
 
   # If you need to define different arguments, you can wrap
   trunk_wrapper(nlp; kwargs...) = trunk(nlp, max_time=3.0; kwargs...)

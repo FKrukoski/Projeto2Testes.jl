@@ -6,10 +6,10 @@ using LinearAlgebra
 
 #%%
 # nlp = ADNLPModel(x -> (x[1] - 1)^2 + (x[2] - 2)^2 / 4, zeros(2))
-nlp = CUTEstModel("ROSENBR")
+nlp = CUTEstModel("BRKMCC")
 
 #%%
-output = uncsolver(nlp)
+output = newtoncombusca(nlp)
 
 #%%
 finalize(nlp)
