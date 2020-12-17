@@ -9,7 +9,7 @@ using LinearAlgebra
 nlp = CUTEstModel("ROSENBR")
 
 #%%
-output = newtoncombusca(nlp)
+output = bfgs_bl(nlp)
 print(output)
 
 #%%
