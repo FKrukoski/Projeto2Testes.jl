@@ -14,9 +14,13 @@ function runcutest()
   #pnames = CUTEst.select(max_var=2, max_con=0, only_free_var=true)
   # pnames = CUTEst.select(max_var=5, max_con=0, only_free_var=true)
 
-  pnames = CUTEst.select(min_var=1, max_var = 250,
+  pnames = CUTEst.select(min_var=1, max_var = 1000,
                           max_con=0, only_free_var=true)
   
+  # pnames = CUTEst.select(min_var=501, max_var = 1000,
+  #                         max_con=0, only_free_var=true)
+                          
+
   sort!(pnames)
   problems = (CUTEstModel(p) for p in pnames) # Generator of problems
 
