@@ -84,3 +84,10 @@ end
 # You can comment out this after the tests are run
 stats = runcutest()
 p = table_and_plots(stats)
+
+#%%
+# Salvar resultados em data frame - MUDAR OS NOMES
+# CSV.write(".....csv", stats)
+# CSV.write("nomedoarquivo.csv", stats[:newcombusca])
+# CSV.write("222", stats[:l_bfgs_rcst])
+# CSV.write("333", stats[:lbfgs])
