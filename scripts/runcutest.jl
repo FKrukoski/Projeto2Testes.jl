@@ -87,7 +87,7 @@ p = table_and_plots(stats)
 
 #%%
 # Salvar resultados em data frame - MUDAR OS NOMES
-# CSV.write(".....csv", stats)
-# CSV.write("nomedoarquivo.csv", stats[:newcombusca])
-# CSV.write("222", stats[:l_bfgs_rcst])
-# CSV.write("333", stats[:lbfgs])
+CSV.write("todos-2.csv", stats)
+CSV.write("ncb-2.csv", stats[:newcombusca])
+CSV.write("lst-2.csv", stats[:l_bfgs_rcst])
+CSV.write("lbfgs-2.csv", stats[:lbfgs])
