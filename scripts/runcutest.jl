@@ -7,6 +7,7 @@ using Plots
 using SolverBenchmark
 using JuMP
 using Ipopt
+using ForwardDiff
 
 #%%
 function runcutest()
@@ -14,7 +15,7 @@ function runcutest()
   #pnames = CUTEst.select(max_var=2, max_con=0, only_free_var=true)
   # pnames = CUTEst.select(max_var=5, max_con=0, only_free_var=true)
 
-  pnames = CUTEst.select(min_var=1, max_var = 1000,
+  pnames = CUTEst.select(min_var=1, max_var = 25,
                           max_con=0, only_free_var=true)
   
   # pnames = CUTEst.select(min_var=501, max_var = 1000,
@@ -30,11 +31,13 @@ function runcutest()
   my_gradiente_wrapper(nlp; kwargs...) = gradiente(nlp, max_time=10.0; kwargs...)
 
   solvers = Dict(
-    :lbfgs => lbfgs,
+    # :lbfgs => lbfgs,
     # :trunk => trunk_wrapper,
     # :bfsg_bl => bfgs_bl,
     # :newton => my_newton_wrapper,
     :newcombusca => newtoncombusca,
+    :LBFGS_StrongWolfe => LBFGS_StrongWolfe,
+    :Newton_rc_bissec => Newton_rc_bissec,
     #:bfgs_rc => bfgs_rc,
     :l_bfgs_rcst => l_bfgs_rcst
     # :gradiente => my_gradiente_wrapper
@@ -87,7 +90,7 @@ p = table_and_plots(stats)
 
 #%%
 # Salvar resultados em data frame - MUDAR OS NOMES
-CSV.write("todos-2.csv", stats)
-CSV.write("ncb-2.csv", stats[:newcombusca])
-CSV.write("lst-2.csv", stats[:l_bfgs_rcst])
-CSV.write("lbfgs-2.csv", stats[:lbfgs])
+# CSV.write("todos-2.csv", stats)
+# CSV.write("ncb-2.csv", stats[:newcombusca])
+# CSV.write("lst-2.csv", stats[:l_bfgs_rcst])
+# CSV.write("lbfgs-2.csv", stats[:lbfgs])
