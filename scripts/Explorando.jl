@@ -2,12 +2,12 @@
 using CSV
 using DataFrames
 #%%
-df = DataFrame()
+# df = DataFrame()
 #%%
 
-statsncb = CSV.File("ncb2.csv") |> DataFrame
-statslst = CSV.File("lst2.csv") |> DataFrame
-statslbf = CSV.File("lbfgs2.csv") |> DataFrame
+statsncb = CSV.File("ncb-1000.csv") |> DataFrame
+statslst = CSV.File("lst-1000.csv") |> DataFrame
+statslbf = CSV.File("lbfgs-1000.csv") |> DataFrame
 
 #%%
 #seleciona colunas
@@ -17,28 +17,28 @@ statslbf_uteis = statslbf[:, [:name, :nvar, :status, :elapsed_time, :iter]]
 
 #%%
 # filtra por status
-res1 = statsncb_uteis[statsncb_uteis[:status] .== :first_order, :]
-res2 = statslst_uteis[statslst_uteis[:status] .== :first_order, :]
-res3 = statslbf_uteis[statslbf_uteis[:status] .== :first_order, :]
+res1 = statsncb_uteis[statsncb_uteis[:status] .== "first_order", :]
+res2 = statslst_uteis[statslst_uteis[:status] .== "first_order", :]
+res3 = statslbf_uteis[statslbf_uteis[:status] .== "first_order", :]
 #%%
 
 #%%
 #ordena
-naores1 = statsncb_uteis[statsncb_uteis[:status] .!= :first_order, :]
-sort!(naores1, :name)
-println(naores1[:,:name])
+naores1 = statsncb_uteis[statsncb_uteis[:status] .!= "first_order", :]
+sort!(naores1, [:nvar, :name], rev = [true, false])
+println(naores1)
 #%%
-naores2 = statslst_uteis[statslst_uteis[:status] .!= :first_order, :]
-sort!(naores2, :name)
-println(naores2[:,:name])
+naores2 = statslst_uteis[statslst_uteis[:status] .!= "first_order", :]
+sort!(naores2, [:nvar, :name], rev = [true, false])
+println(naores2)
 #%%
-naores3 = statslbf_uteis[statslbf_uteis[:status] .!= :first_order, :]
-sort!(naores2, :name)
-println(naores3[:,:name])
+naores3 = statslbf_uteis[statslbf_uteis[:status] .!= "first_order", :]
+sort!(naores3, [:nvar, :name], rev = [true, false])
+println(naores3)
 #%%
-CSV.write("naoncb-2.csv", naores1)
-CSV.write("naolst-2.csv", naores2)
-CSV.write("naolbfgs-2.csv", naores3)
+# CSV.write("naoncb-5.csv", naores1)
+# CSV.write("naolst-5.csv", naores2)
+# CSV.write("naolbfgs-5.csv", naores3)
 #%%
 
 #%%
@@ -53,7 +53,7 @@ conta_3 = by(statslbf_uteis, :status, c -> DataFrame(count = nrow(c)))
 print(conta_3)
 #%%
 using Latexify
-latexify(conta_3, env = :table, latex = false)
+print(latexify(naores2, env = :table, latex = false))
 #%%
 A1 = naores1[:,:name]
 A2 = naores2[:,:name]
